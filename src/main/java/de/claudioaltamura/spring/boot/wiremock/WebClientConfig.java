@@ -11,7 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
 	@Bean
-	public WebClient todoWebClient(
+	public WebClient superheroWebClient(
 			@Value("${superhero_base_url}") String superheroBaseUrl,
 			WebClient.Builder webClientBuilder) {
 		return webClientBuilder
