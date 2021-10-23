@@ -1,6 +1,9 @@
 package de.claudioaltamura.spring.boot.wiremock;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +38,7 @@ class SuperheroControllerIT {
 	@Test
 	void testGetAllShouldReturnDataFromClient() {
 		this.wireMockServer.stubFor(
-				WireMock.get("/superheroes")
+				WireMock.get("/webservice")
 						.willReturn(aResponse()
 								.withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
 								.withBody("[{\"id\": 1, \"name\":\"Batman\",\"power\":90.0,\"realName\":\"Bruce Wayne\",\"city\":\"Gotham City\"}]"))

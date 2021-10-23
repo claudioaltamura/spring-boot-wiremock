@@ -21,7 +21,7 @@ public class SuperheroController {
 	public ArrayNode getAll() {
 		return this.superheroWebClient
 				.get()
-				.uri("/superheroes")
+				.uri("/webservice")
 				.retrieve()
 				.bodyToMono(ArrayNode.class)
 				.block();
