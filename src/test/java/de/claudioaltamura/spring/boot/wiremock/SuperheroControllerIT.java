@@ -3,7 +3,6 @@ package de.claudioaltamura.spring.boot.wiremock;
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.verify;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
@@ -55,5 +54,7 @@ class SuperheroControllerIT {
 				.isEqualTo("Batman")
 				.jsonPath("$.length()")
 				.isEqualTo(1);
+
+		this.wireMockServer.verify(getRequestedFor(urlEqualTo("/webservice")));
 	}
 }

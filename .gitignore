@@ -12,3 +12,4 @@ buildNumber.properties
 /.idea/
 /.settings/
 /spring-boot-wiremock.iml
+/.project
