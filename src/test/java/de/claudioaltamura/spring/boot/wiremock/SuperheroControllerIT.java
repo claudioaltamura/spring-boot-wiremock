@@ -4,6 +4,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,13 +38,15 @@ class SuperheroControllerIT {
 	}
 
 	@Test
-	void testGetAllShouldReturnDataFromClient() {
+	void testGetAllShouldReturnDataFromClient() throws IOException {
+		InputStream jsonInputStream
+				= this.getClass().getClassLoader().getResourceAsStream("superheroes.json");
 		this.wireMockServer.stubFor(
 				WireMock.get("/webservice")
 						.willReturn(aResponse()
 								.withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-								.withBody("[{\"id\": 1, \"name\":\"Batman\",\"power\":90.0,\"realName\":\"Bruce Wayne\",\"city\":\"Gotham City\"}]"))
-		);
+								.withBody(jsonInputStream.readAllBytes())
+		));
 
 		this.webTestClient
 				.get()
