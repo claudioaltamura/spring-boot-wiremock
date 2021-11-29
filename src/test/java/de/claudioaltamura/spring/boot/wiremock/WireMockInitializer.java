@@ -10,10 +10,9 @@ import org.springframework.context.event.ContextClosedEvent;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 
-public class WireMockInitializer
+class WireMockInitializer
 		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-	@Override
 	public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
 		WireMockServer wireMockServer = new WireMockServer(new WireMockConfiguration().dynamicPort());
 		wireMockServer.start();
