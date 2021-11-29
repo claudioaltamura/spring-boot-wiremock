@@ -49,6 +49,8 @@ class SuperheroControllerIT {
 				.exchange()
 				.expectStatus()
 				.is2xxSuccessful()
+				.expectHeader()
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.expectBody()
 				.jsonPath("$[0].name")
 				.isEqualTo("Batman")
