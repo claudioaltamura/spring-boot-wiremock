@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -43,10 +44,11 @@ class SuperheroControllerIT {
 				= this.getClass().getClassLoader().getResourceAsStream("superheroes.json");
 		this.wireMockServer.stubFor(
 				WireMock.get("/webservice")
+						.atPriority(1)
 						.willReturn(aResponse()
 								.withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
 								.withBody(jsonInputStream.readAllBytes())
-		));
+						));
 
 		this.webTestClient
 				.get()
@@ -61,6 +63,19 @@ class SuperheroControllerIT {
 				.isEqualTo("Batman")
 				.jsonPath("$.length()")
 				.isEqualTo(1);
+
+		this.wireMockServer.verify(getRequestedFor(urlEqualTo("/webservice")));
+	}
+
+	@Test
+	void testGetAllShouldReturnError() throws IOException {
+		this.webTestClient
+				.get()
+				.uri("http://localhost:" + port + "/webservice")
+				.accept(MediaType.TEXT_PLAIN)
+				.exchange()
+				.expectStatus()
+				.isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		this.wireMockServer.verify(getRequestedFor(urlEqualTo("/webservice")));
 	}

@@ -1,5 +1,10 @@
 package de.claudioaltamura.spring.boot.wiremock;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.matching;
+import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
+
 import java.util.Map;
 
 import org.springframework.boot.test.util.TestPropertyValues;
@@ -13,8 +18,10 @@ import com.github.tomakehurst.wiremock.core.WireMockConfiguration;
 class WireMockInitializer
 		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
+	private WireMockServer wireMockServer;
+
 	public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
-		WireMockServer wireMockServer = new WireMockServer(new WireMockConfiguration().dynamicPort());
+		wireMockServer = new WireMockServer(new WireMockConfiguration().dynamicPort());
 		wireMockServer.start();
 
 		configurableApplicationContext
@@ -30,5 +37,16 @@ class WireMockInitializer
 		TestPropertyValues
 				.of(Map.of("superhero_base_url", "http://localhost:" + wireMockServer.port()))
 				.applyTo(configurableApplicationContext);
+
+		addErrorStub();
+	}
+
+	private void addErrorStub() {
+		wireMockServer.stubFor(get(urlPathEqualTo("/webservice"))
+				.atPriority(9)
+				.withHeader("Accept", matching("text/.*"))
+				.willReturn(aResponse()
+						.withStatus(503)));
+
 	}
 }

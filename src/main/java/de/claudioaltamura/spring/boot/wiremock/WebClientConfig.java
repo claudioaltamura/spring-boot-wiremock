@@ -16,7 +16,7 @@ public class WebClientConfig {
 			WebClient.Builder webClientBuilder) {
 		return webClientBuilder
 				.baseUrl(superheroBaseUrl)
-				.defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+				//.defaultHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
 				.build();
 	}
 }
