@@ -11,7 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -40,17 +40,19 @@ class SuperheroControllerIT {
 
 	@Test
 	void testGetAllShouldReturnDataFromClient() throws IOException {
-		InputStream jsonInputStream
-				= this.getClass().getClassLoader().getResourceAsStream("superheroes.json");
-		this.wireMockServer.stubFor(
-				WireMock.get("/webservice")
-						.atPriority(1)
-						.willReturn(aResponse()
-								.withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
-								.withBody(jsonInputStream.readAllBytes())
-						));
+        try (InputStream jsonInputStream = this.getClass().getClassLoader().getResourceAsStream("superheroes.json")) {
+            if (jsonInputStream != null) {
+                this.wireMockServer.stubFor(
+                        WireMock.get("/webservice")
+                                .atPriority(1)
+                                .willReturn(aResponse()
+                                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                                        .withBody(jsonInputStream.readAllBytes())
+                                ));
+            }
+        }
 
-		this.webTestClient
+        this.webTestClient
 				.get()
 				.uri("http://localhost:" + port + "/superheroes")
 				.exchange()
@@ -68,7 +70,7 @@ class SuperheroControllerIT {
 	}
 
 	@Test
-	void testGetAllShouldReturnError() throws IOException {
+	void testGetAllShouldReturnError() {
 		this.webTestClient
 				.get()
 				.uri("http://localhost:" + port + "/webservice")
