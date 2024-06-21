@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/claudioaltamura/spring-boot-wiremock.svg?branch=master)](https://travis-ci.com/claudioaltamura/spring-boot-wiremock)
+[![Java CI with Maven](https://github.com/claudioaltamura/spring-boot-wiremock/actions/workflows/maven-build.yaml/badge.svg)](https://github.com/claudioaltamura/spring-boot-resilience4j/actions/workflows/maven-build.yaml)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
