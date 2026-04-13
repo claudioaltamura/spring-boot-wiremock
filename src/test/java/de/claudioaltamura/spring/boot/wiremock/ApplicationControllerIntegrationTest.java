@@ -1,6 +1,5 @@
 package de.claudioaltamura.spring.boot.wiremock;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.web.client.RestClient;
+import tools.jackson.databind.JsonNode;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;

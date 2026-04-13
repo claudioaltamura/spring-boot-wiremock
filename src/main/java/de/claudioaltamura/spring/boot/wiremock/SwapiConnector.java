@@ -1,10 +1,10 @@
 package de.claudioaltamura.spring.boot.wiremock;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import tools.jackson.databind.JsonNode;
 
 @Component
 public class SwapiConnector {
